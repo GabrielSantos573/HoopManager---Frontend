@@ -39,7 +39,7 @@ export default function Login() {
       <Container>
         <img alt="Logo Login" src="./logo_login.png" />
         <div>
-          <span style={{ marginLeft: "20px" }}>Acesso HoopManager</span>
+          <span style={{ marginLeft: "10px" }}>Acesso HoopManager</span>
           <BorderContainer onSubmit={submit}>
             <LoginIpunt
               type="text"
