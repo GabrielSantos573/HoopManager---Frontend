@@ -24,6 +24,13 @@ export const Container = styled.div`
   line-height: normal;
 `;
 
+export const LoginLogo = styled.img`
+  width: 450px; /* Ajuste o tamanho conforme necessário */
+  height: auto;
+  border-radius: 20px;
+  align-self: center; /* Alinha a imagem ao centro no container */
+`;
+
 export const BorderContainer = styled.form`
   display: grid;
   align-items: center;

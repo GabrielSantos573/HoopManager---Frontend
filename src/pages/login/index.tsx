@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BorderContainer, Container, LoginButton, LoginIpunt } from "../../styles/loginStyle";
+import { BorderContainer, Container, LoginButton, LoginIpunt, LoginLogo } from "../../styles/loginStyle";
 
 export default function Login() {
   const [isAuth, setIsAuth] = useState(false);
@@ -37,8 +37,8 @@ export default function Login() {
   return (
     <>
       <Container>
-        <img alt="Logo Login" src="./logo_login.png" />
-        <div>
+      <LoginLogo alt="Logo Login" src="./logo_login.png" />
+      <div>
           <span style={{ marginLeft: "10px" }}>Acesso HoopManager</span>
           <BorderContainer onSubmit={submit}>
             <LoginIpunt
