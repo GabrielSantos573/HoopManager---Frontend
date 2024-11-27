@@ -1,14 +1,14 @@
-import { useEffect } from "react";
 import router from "next/router";
+import { useEffect } from "react";
 import useAuth from "../hook/withAuth";
-import { Container, Navbar, SidebarLogo, ContentContainer, Title, Subtitle } from "../styles/homeStyle";
+import { Container, ContentContainer, Navbar, SidebarLogo, Subtitle, Title } from "../styles/homeStyle";
 
 export default function Home() {
   useAuth();
 
-  useEffect(() => {
-    router.push("/");
-  });
+   useEffect(() => {
+     router.push("/times");
+   });
 
   return (
     <>
