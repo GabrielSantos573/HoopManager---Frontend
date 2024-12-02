@@ -4,7 +4,7 @@ import { BorderContainer, Container, LoginButton, LoginIpunt, LoginLogo } from "
 
 export default function Login() {
   const [isAuth, setIsAuth] = useState(false);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Login() {
   const submit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const user = {
-      username: username,
+      email: email,
       password: password,
     };
     // Create the POST requuest
@@ -43,11 +43,11 @@ export default function Login() {
           <BorderContainer onSubmit={submit}>
             <LoginIpunt
               type="text"
-              name="Usuario"
-              placeholder="Usuário"
-              value={username}
+              name="Email"
+              placeholder="Email"
+              value={email}
               required
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <LoginIpunt
               type="password"
