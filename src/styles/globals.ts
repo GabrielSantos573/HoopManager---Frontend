@@ -8,12 +8,8 @@ body {
   margin: 0;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #FFF;
-  /* background-image: url('/login_bg.png'); */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+  background-color: #fff5e6; /* Fundo suave */
+  color: #333; /* Texto padrão */
   height: 100vh;
   width: 100%;
   min-height: 100vh;
@@ -22,8 +18,18 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #ff6200; /* Links na cor laranja */
   text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ff8c32;
+  }
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
 }
 
 * {
@@ -35,30 +41,27 @@ a {
     color-scheme: dark;
   }
   body {
-    color: black;
-    /* background: white; */
+    background-color: #333; /* Fundo escuro */
+    color: #fff; /* Texto claro */
   }
 }
 
-/* width */
+/* Estilo do Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: rgba(0,0,255, 0.3);
-  backdrop-filter: blur(5px);
+  background: #ffe6d5; /* Fundo do scrollbar */
+  border-radius: 5px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,255, 0.5);
-  transition: ease 300ms;
-  border-radius: 999px;
-  transition: ease 300ms;
-  :hover {
-    background: rgba(0,0,255, 1);
+  background: #ff6200; /* Cor do indicador */
+  border-radius: 5px;
+
+  &:hover {
+    background: #ff8c32;
   }
 }
 `;

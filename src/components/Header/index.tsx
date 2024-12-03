@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import { LogoutButton } from "../logout";
-import { Container, TextContainer } from "./style";
+import { Container, TextContainer, HeaderWrapper, LogoContainer, LogoutContainer } from "./style";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -31,15 +31,20 @@ export const Header: React.FC<HeaderProps> = ({ pag }) => {
           })();
 
       }, []);
-    return (
-        <Container>
-            <Image src="/logo_header.png" alt="logo_header" width={242} height={49} />
-            <TextContainer>{pag}</TextContainer>
-            <div style={{display: "flex",gap: "10px", alignItems: "center", textAlign: "center"}}>
-                <span style={{color: "#fff", textTransform: "capitalize", fontSize: "18px", fontWeight: "600", pointerEvents: "none"}}>{user} |</span>
-                <LogoutButton />
-            </div>
-            
-        </Container>
-    );
-};
+      return (
+        <HeaderWrapper>
+          <Container>
+            <TextContainer>
+              <h1>{pag}</h1>
+              <p>Bem-vindo, {user}!</p>
+            </TextContainer>
+            <LogoutContainer>
+              <LogoContainer>
+                <Image src="/logo_login.png" alt="Logo HoopManager" width={50} height={50} />
+              </LogoContainer>
+              <LogoutButton />
+            </LogoutContainer>
+          </Container>
+        </HeaderWrapper>
+      );
+    };

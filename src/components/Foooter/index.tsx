@@ -1,10 +1,9 @@
 import { Container } from "./style";
 
 export const Footer = () => {
-
-    return (
-        <Container>
-            <span>© Telecomunicações Brasileiras S.A. - Telebras | Gerência de Manutenção da Planta</span>
-        </Container>
-    );
+  return (
+    <Container>
+      <span>© 2024 HoopManager | Gerenciado por Gustavo Maxwel de Sousa Oliveira e Gabriel Oliveira Santos</span>
+    </Container>
+  );
 };

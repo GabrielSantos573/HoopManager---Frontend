@@ -1,23 +1,54 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+
+export const HeaderWrapper = styled.header`
+  width: 100%;
+  background-color: #ff6200;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 export const Container = styled.div`
-  background-color: #28478E;
   display: flex;
-  width: 100%;
-  align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  position: relative;
-  z-index: 1;
+  align-items: center;
+  width: 100%;
 `;
 
 export const TextContainer = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 32px;
-  font-weight: 600;
-  color: #fff;
-  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    color: white;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 5px 0 0;
+    color: #ffe6d5;
+  }
+`;
+
+export const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  img {
+    height: auto;
+    width: auto;
+  }
+`;
+
+export const LogoutContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;

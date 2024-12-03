@@ -1,80 +1,58 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-image: url('/login_bg.png');
+  background-image: url('/login_bg.png'); /* Altere para o caminho correto da imagem */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   height: 100vh;
   width: 100%;
-  display: grid;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0px;
-  /* padding-top: 50px; */
-
   color: #fff;
-  text-align: left;
-  font-family: Arial;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  font-family: 'Arial', sans-serif;
 `;
 
 export const LoginLogo = styled.img`
-  width: 450px; /* Ajuste o tamanho conforme necessário */
+  width: 350px;
   height: auto;
-  border-radius: 20px;
-  align-self: center; /* Alinha a imagem ao centro no container */
+  margin-bottom: 20px;
 `;
 
 export const BorderContainer = styled.form`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 34px 42px;
-  gap: 40px;
-  color: white;
-  border-radius: 20px;
-  border: 2px solid #fff;
-  background: rgba(40, 71, 142, 0);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
 `;
 
 export const LoginIpunt = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  background: #fff;
-  border: none;
-  height: 59px;
-  color: #000;
-  font-family: Arial;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  font-size: 16px;
 `;
 
 export const LoginButton = styled.button`
-  border-radius: 5px;
-  background: #28478e;
-  padding: 14px;
+  background-color: #ff6200;
   border: none;
-  margin-top: 60px;
-  cursor: pointer;
-
+  border-radius: 5px;
   color: #fff;
-  text-align: center;
-  font-family: Arial;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  font-size: 18px;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-  transition: ease-in-out 200ms;
-
-  :hover {
-    color: #28478e;
-    background: white;
+  &:hover {
+    background-color: #ff8c32;
   }
 `;
