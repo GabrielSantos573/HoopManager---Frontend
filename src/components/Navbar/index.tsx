@@ -18,48 +18,21 @@ type NavLinkType = {
 
 const navlink: NavLinkType = {
   padrao: [
-    { icon: "/nav/Increase.png", link: ".", name: "Dashboards", aba: "padrao" },
-    { icon: "/nav/man.png", link: ".", name: "Manutenção", aba: "manutencao" },
-    { icon: "/nav/List.png", link: ".", name: "Operacional", aba: "padrao" },
-    { icon: "/nav/Warehouse.png", link: ".", name: "Patrimônio", aba: "padrao" },
-    { icon: "/nav/Boxes.png", link: ".", name: "Inventário", aba: "padrao" },
-    { icon: "/nav/Agreement.png", link: ".", name: "Contratos", aba: "padrao" },
-    { icon: "/nav/Manual.png", link: ".", name: "Base Con.", aba: "padrao" },
-    { icon: "/nav/Paper.png", link: ".", name: "NTPs", aba: "padrao" },
-    {
-      icon: "/nav/plataforma.png",
-      link: "/plataformas",
-      name: "Plataformas",
-      aba: "padrao",
-    },
+    { icon: "/nav/time-basquete.png", link: ".", name: "Time", aba: "padrao" },
+    { icon: "/nav/tabela-basquete.png", link: ".", name: "Partidas", aba: "manutencao" },
+    { icon: "/nav/quadra-basquete.png", link: ".", name: "Treinos", aba: "treinos" },
   ],
   manutencao: [
-    { icon: "/nav/ticket.png", link: "/ticket", name: "Ticket", aba: "padrao" },
-    {
-      icon: "/nav/desconto.png",
-      link: "/desconto",
-      name: "Descontos",
-      aba: "padrao",
-    },
-    {
-      icon: "/nav/localidade.png",
-      link: "/localidades",
-      name: "Localidades",
-      aba: "padrao",
-    },
-    {
-      icon: "/nav/estacao.png",
-      link: "/estacoes",
-      name: "Estações",
-      aba: "padrao",
-    },
-    { icon: "/nav/equipe.png", link: "/lideres", name: "Líderes", aba: "padrao" },
-    {
-      icon: "/nav/tech.png",
-      link: "/tecnicos",
-      name: "Técnicos",
-      aba: "padrao",
-    },
+    { icon: "/nav/cesta-de-basquete.png", link: "/ticket", name: "Ver partidas", aba: "padrao" },
+    { icon: "/nav/jogador-de-basquete.png", link: "/desconto", name: "Criar Partidas", aba: "padrao", },
+    { icon: "/nav/quadra-de-basquete.png", link: "/localidades", name: "Editar Partidas", aba: "padrao", },
+    { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
+  ],
+  treinos: [
+    { icon: "/nav/cesta-de-basquete.png", link: "/ticket", name: "Dias de treino", aba: "padrao" },
+    { icon: "/nav/jogador-de-basquete.png", link: "/desconto", name: "Videos e jodadas", aba: "padrao", },
+    { icon: "/nav/quadra-de-basquete.png", link: "/localidades", name: "Treinos extras", aba: "padrao", },
+    { icon: "/nav/quadra-de-basquete.png", link: ".", name: "Avisos", aba: "padrao", },
     { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
   ],
 };
