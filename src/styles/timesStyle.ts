@@ -1,5 +1,49 @@
 import styled from "styled-components";
 
+export const JogadorRowContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+`;
+
+export const JogadorRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+
+  img {
+    margin-right: 15px;
+    cursor: pointer; /* Indica que a imagem é clicável */
+  }
+
+  div {
+    width: 100%;
+  }
+
+  td {
+    margin: 5px 0;
+    font-size: 16px; /* Tamanho legível */
+    color: #333; /* Cor escura para visibilidade */
+  }
+
+  .details {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9; /* Fundo claro */
+    border-radius: 5px;
+    color: #333; /* Texto com contraste */
+    font-size: 14px; /* Fonte ajustada */
+  }
+`;
+
+
+
 // Dropdown para seleção de times
 export const Dropdown = styled.div`
   display: flex;

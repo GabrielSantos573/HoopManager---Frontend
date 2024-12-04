@@ -23,7 +23,9 @@ export type TimesType = {
 };
 
 export type JogadorType = {
+  id: number;
   nome: string;
+  idade: number;
   posicao: string;
   status: string;
   altura: string;
@@ -34,6 +36,7 @@ export type JogadorType = {
   roubos_bola: number;
   num_jogos: number;
   time?: TimesType | null;
+  foto?: string | null;
 };
 
 export type ArenaType = {
