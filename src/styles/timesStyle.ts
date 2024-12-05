@@ -5,44 +5,58 @@ export const JogadorRowContainer = styled.div`
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
+  padding: 10px;
+  background: linear-gradient(90deg, #fff5e6, #ffe6d5); /* Gradiente no fundo */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 `;
+
 
 export const JogadorRow = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   background-color: #fff;
   border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 10px 0;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #ffe6d5, #fff5e6); /* Gradiente ao passar o mouse */
+  }
 
   img {
     margin-right: 15px;
-    cursor: pointer; /* Indica que a imagem é clicável */
+    cursor: pointer;
+    border: 2px solid #ff6200;
+    border-radius: 50%;
   }
 
   div {
-    width: 100%;
-  }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
-  td {
-    margin: 5px 0;
-    font-size: 16px; /* Tamanho legível */
-    color: #333; /* Cor escura para visibilidade */
+    td {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
   }
 
   .details {
     margin-top: 10px;
     padding: 10px;
-    background-color: #f9f9f9; /* Fundo claro */
-    border-radius: 5px;
-    color: #333; /* Texto com contraste */
-    font-size: 14px; /* Fonte ajustada */
+    background: #ffe6d5;
+    border-radius: 8px;
+    color: #333;
+    font-size: 14px;
   }
 `;
-
-
 
 // Dropdown para seleção de times
 export const Dropdown = styled.div`
@@ -52,26 +66,27 @@ export const Dropdown = styled.div`
 
   label {
     font-size: 16px;
-    font-weight: 500;
-    color: #2a71b1;
+    font-weight: bold;
+    color: #ff6200;
   }
 
   select {
     height: 40px;
     width: 230px;
     background: #fff;
-    border: 2px solid #2a71b1;
-    border-radius: 6px;
-    color: #2a71b1;
-    cursor: pointer;
+    border: 2px solid #ff6200;
+    border-radius: 8px;
+    color: #333;
     font-size: 16px;
     padding: 8px;
 
-    :focus {
+    &:focus {
       outline: none;
+      border-color: #ff8c32; /* Cor ao focar */
     }
   }
 `;
+
 
 // Estilo para a tabela de jogadores
 type PageProps = {
@@ -127,12 +142,34 @@ export const Tabela = styled.table`
 export const HeaderArea = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 10px;
-  align-items: left;
+  align-items: flex-start;
   text-align: left;
-  margin-bottom: 5px; 
+  margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffe6d5, #fff5e6); /* Gradiente de fundo */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  h1 {
+    font-size: 24px;
+    color: #ff6200;
+    margin: 0;
+  }
+
+  p {
+    margin: 5px 0;
+    color: #333;
+    font-size: 14px;
+  }
+
+  img {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  }
 `;
+
 
 export const BuscaInput = styled.input`
   border: 1px #2a71b1 solid;
@@ -310,29 +347,34 @@ export const SemTicketMessagem = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-    width: 100%;
-    height: 100%; 
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255,255,255, 0);
-    backdrop-filter: blur(5px); 
-    z-index: 999;
-    gap: 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Fundo escuro com opacidade */
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  gap: 10px;
 
-    .X-no-peito {
-        font-size: 52px;
-        font-weight: 700;
-        color: #2a71b1;
-        align-self: flex-start;
-        margin-top: 80px;
-        cursor: pointer;
+  .X-no-peito {
+    font-size: 52px;
+    font-weight: bold;
+    color: #ff6200;
+    align-self: flex-start;
+    margin-top: 80px;
+    cursor: pointer;
+
+    &:hover {
+      color: #ff8c32; /* Cor mais clara ao passar o mouse */
     }
+  }
 `;
+
 
 export const FilterModal = styled.div`
   grid-template-columns: 1fr 1fr;
