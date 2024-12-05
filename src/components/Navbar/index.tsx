@@ -60,7 +60,7 @@ export const Navbar = () => {
             transition: "opacity 200ms ease-in-out, max-height 200ms ease-in-out",
           }}
         >
-          GMP
+          Gestão do Time
         </span>
       </NavA>
 
