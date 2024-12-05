@@ -23,9 +23,10 @@ const navlink: NavLinkType = {
     { icon: "/nav/quadra-basquete.png", link: ".", name: "Treinos", aba: "treinos" },
   ],
   time: [
+    { icon: "/nav/botao-play.png", link: "/ticket", name: "Criar Time", aba: "padrao" },
     { icon: "/nav/cesta-de-basquete.png", link: "/ticket", name: "Ver time", aba: "padrao" },
-    { icon: "/nav/jogador-de-basquete.png", link: "/desconto", name: "Editar time", aba: "padrao", },
-    { icon: "/nav/quadra-de-basquete.png", link: "/localidades", name: "Jogadores", aba: "padrao", },
+    { icon: "/nav/botao-editar.png", link: "/desconto", name: "Editar time", aba: "padrao", },
+    { icon: "/nav/jogador-dunk.png", link: "/localidades", name: "Jogadores", aba: "padrao", },
     { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
   ],
   manutencao: [
@@ -35,10 +36,10 @@ const navlink: NavLinkType = {
     { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
   ],
   treinos: [
-    { icon: "/nav/cesta-de-basquete.png", link: "/ticket", name: "Dias de treino", aba: "padrao" },
-    { icon: "/nav/jogador-de-basquete.png", link: "/desconto", name: "Videos e jodadas", aba: "padrao", },
-    { icon: "/nav/quadra-de-basquete.png", link: "/localidades", name: "Treinos extras", aba: "padrao", },
-    { icon: "/nav/quadra-de-basquete.png", link: ".", name: "Avisos", aba: "padrao", },
+    { icon: "/nav/calendario.png", link: "/ticket", name: "Dias de treino", aba: "padrao" },
+    { icon: "/nav/videos.png", link: "/desconto", name: "Videos e jodadas", aba: "padrao", },
+    { icon: "/nav/musculacao.png", link: "/localidades", name: "Treinos extras", aba: "padrao", },
+    { icon: "/nav/atencao.png", link: ".", name: "Avisos", aba: "padrao", },
     { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
   ],
 };
