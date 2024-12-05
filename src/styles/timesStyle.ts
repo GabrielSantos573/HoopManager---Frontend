@@ -1,5 +1,79 @@
 import styled from "styled-components";
 
+export const JogadorRowContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+`;
+
+export const JogadorRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+
+  img {
+    margin-right: 15px;
+    cursor: pointer; /* Indica que a imagem é clicável */
+  }
+
+  div {
+    width: 100%;
+  }
+
+  td {
+    margin: 5px 0;
+    font-size: 16px; /* Tamanho legível */
+    color: #333; /* Cor escura para visibilidade */
+  }
+
+  .details {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9; /* Fundo claro */
+    border-radius: 5px;
+    color: #333; /* Texto com contraste */
+    font-size: 14px; /* Fonte ajustada */
+  }
+`;
+
+
+
+// Dropdown para seleção de times
+export const Dropdown = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2a71b1;
+  }
+
+  select {
+    height: 40px;
+    width: 230px;
+    background: #fff;
+    border: 2px solid #2a71b1;
+    border-radius: 6px;
+    color: #2a71b1;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px;
+
+    :focus {
+      outline: none;
+    }
+  }
+`;
+
+// Estilo para a tabela de jogadores
 type PageProps = {
   ativo?: boolean;
 };
@@ -22,8 +96,11 @@ export const Tabela = styled.table`
   text-align: center;
   position: relative;
 
-  tbody{
+  tbody {
     overflow: auto;
+  }
+  thead{
+    
   }
 
   .cabeca {
@@ -34,101 +111,27 @@ export const Tabela = styled.table`
     font-size: 16px;
   }
 
-  .sort {
-    cursor: pointer;
-    transition: ease-in-out 200ms;
-
-    :hover {
-      color: #2a71b1;
-    }
-  }
-
-  tr{
+  tr {
     height: 45px;
   }
 
-  td{
+  td {
     width: 300px;
   }
 
-  tr:nth-child(odd){
-    background-color: #F9F9F9;
+  tr:nth-child(odd) {
+    background-color: #f9f9f9;
   }
-
-  .ticket {
-    color: blue;
-    cursor: pointer;
-  }
-
-  .categoria {
-  text-align: center;
-  padding: 4px 8px;
-  border-radius: 18px;
-  color: #fff;
-  text-transform: uppercase;
-}
-
-/* Apply specific background colors based on the content */
-.categoria[data-category="OS Padtec"] {
-  background-color: #D75C0A;
-}
-
-.categoria[data-category="Implantação"] {
-  background-color: #1F767A;
-}
-
-.categoria[data-category="Operação"] {
-  background-color: #249745;
-}
-
-.categoria[data-category="Em Aceitação"] {
-  background-color: #666666;
-}
-
-.categoria[data-category=" Homologação"] {
-  background-color: #666666;
-}
-
-.categoria[data-category="Planejamento"] {
-  background-color: #666666;
-}
-
-.categoria[data-category="Projeto"] {
-  background-color: #666666;
-}
-
-.categoria[data-category="Cancelado"] {
-  background-color: #C91726;
-}
-
-.categoria[data-category="Desativado"] {
-  background-color: #C91726;
-}
 `;
 
 export const HeaderArea = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column; 
   gap: 10px;
-  justify-content: space-between;
-
-  
-  .fechado{
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2326749a'><polygon points='0,0 100,0 50,50'/></svg>")
-      no-repeat;
-    background-size: 12px;
-    background-position: calc(100% - 8px) 17px;
-    background-repeat: no-repeat;
-  }
-
-
-  .aberto{
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2326749a'><g transform='rotate(180, 50, 50)'><polygon points='0,0 100,0 50,50'/></g></svg>")
-    no-repeat;
-    background-size: 12px;
-    background-position: calc(100% - 8px) 10px;
-    background-repeat: no-repeat;
-  }
+  align-items: left;
+  text-align: left;
+  margin-bottom: 5px; 
 `;
 
 export const BuscaInput = styled.input`
