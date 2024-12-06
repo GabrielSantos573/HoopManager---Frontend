@@ -9,6 +9,8 @@ export type AxiosData = {
   nome?: string;
 };
 
+ 
+
 export type TimesType = {
   id: number;
   nome: string;
@@ -19,7 +21,7 @@ export type TimesType = {
   derrotas: number;
   campeonatos_vencidos: number;
   descricao: string;
-  logo?: string | null;
+  logo?: File | null;
 };
 
 export type JogadorType = {
@@ -36,7 +38,7 @@ export type JogadorType = {
   roubos_bola: number;
   num_jogos: number;
   time?: TimesType | null;
-  foto?: string | null;
+  foto?: File | null;
 };
 
 export type ArenaType = {
