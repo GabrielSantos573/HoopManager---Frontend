@@ -7,6 +7,7 @@ import Layout from "../../components/Layout";
 import useAuth from "../../hook/withAuth";
 import { Dropdown, HeaderArea, JogadorRow, JogadorRowContainer } from "../../styles/timesStyle";
 import { JogadorType, TimesType } from "../../types/types";
+import { FormContainer, InputField, TextAreaField, SelectField, PlayerCard, SubmitButton } from "../../styles/timesStyle";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -80,18 +81,18 @@ export default function Times() {
         formData.append("logo", newTime.logo);
       }
       formData.append("jogadores", JSON.stringify(jogadores));
-  
+
       console.log("FormData enviado:", Object.fromEntries(formData.entries()));
-  
+
       const response = await axios.post("http://localhost:8000/create_time/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-  
+
       alert(response.data.message);
       atualizaTimes();
     } catch (error) {
       console.error("Erro ao criar time e jogadores:", error);
-  
+
       if (axios.isAxiosError(error) && error.response) {
         console.error("Detalhes do erro:", error.response.data);
         alert(`Erro: ${error.response.data.error || "Algo deu errado no servidor"}`);
@@ -117,22 +118,42 @@ export default function Times() {
         {/* Detalhes do time selecionado */}
         {selectedTime && (
           <HeaderArea>
-            <div>
+            <div className="header-content">
               <Image
-                src={selectedTime.logo ? `http://127.0.0.1:8000${selectedTime.logo}` : "http://127.0.0.1:8000/media/times/logos/default-logo.png"}
-                width={100}
-                height={100}
+                src={
+                  selectedTime.logo
+                    ? `http://127.0.0.1:8000${selectedTime.logo}`
+                    : "http://127.0.0.1:8000/media/times/logos/default-logo.png"
+                }
+                width={120}
+                height={120}
                 alt={`${selectedTime.nome} logo`}
+                className="team-logo"
               />
-              <h1>{selectedTime.nome}</h1>
+              <div className="team-details">
+                <h1>{selectedTime.nome}</h1>
+                <p>
+                  <strong>Região:</strong> {selectedTime.regiao}
+                </p>
+                <p>
+                  <strong>Treinador:</strong> {selectedTime.treinador}
+                </p>
+                <p>
+                  <strong>Jogadores:</strong> {selectedTime.numero_jogadores}
+                </p>
+              </div>
+            </div>
+            <div className="team-stats">
               <p>
-                Região: {selectedTime.regiao} | Treinador: {selectedTime.treinador} | Jogadores: {selectedTime.numero_jogadores}
+                <strong>Vitórias:</strong> {selectedTime.vitorias} |{" "}
+                <strong>Derrotas:</strong> {selectedTime.derrotas}
               </p>
               <p>
-                Vitórias: {selectedTime.vitorias} | Derrotas: {selectedTime.derrotas} | Descrição: {selectedTime.descricao}
+                <strong>Descrição:</strong> {selectedTime.descricao}
               </p>
             </div>
           </HeaderArea>
+
         )}
 
         {/* Dropdown de seleção de time */}
@@ -188,56 +209,51 @@ export default function Times() {
 
 
         {/* Formulário de cadastro de time */}
-        <div style={{ border: "1px solid #ccc", padding: "15px", borderRadius: "5px", backgroundColor: "#fff" }}>
+        {/* Formulário de cadastro de time */}
+        <FormContainer>
           <h2>Cadastrar Novo Time</h2>
-          <input
+          <InputField
             type="text"
             placeholder="Nome"
             value={newTime.nome}
             onChange={(e) => setNewTime({ ...newTime, nome: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
           />
-          <input
+          <InputField
             type="text"
             placeholder="Região"
             value={newTime.regiao}
             onChange={(e) => setNewTime({ ...newTime, regiao: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
           />
-          <input
+          <InputField
             type="text"
             placeholder="Treinador"
             value={newTime.treinador}
             onChange={(e) => setNewTime({ ...newTime, treinador: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
           />
-          <input
+          <InputField
             type="number"
             placeholder="Número de Jogadores"
             value={newTime.numero_jogadores}
             onChange={handleNumeroJogadoresChange}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
           />
-          <textarea
+          <TextAreaField
             placeholder="Descrição"
             value={newTime.descricao}
             onChange={(e) => setNewTime({ ...newTime, descricao: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
-          ></textarea>
-          <input
+          />
+          <InputField
             type="file"
             accept="image/*"
             onChange={(e) => {
               const file = e.target.files ? e.target.files[0] : null;
               setNewTime({ ...newTime, logo: file });
             }}
-            style={{ display: "block", marginBottom: "10px" }}
           />
 
           {jogadores.map((jogador, index) => (
-            <div key={index} style={{ border: "1px solid #ddd", marginBottom: "10px", padding: "10px" }}>
+            <PlayerCard key={index}>
               <h4>Jogador {index + 1}</h4>
-              <input
+              <InputField
                 type="text"
                 placeholder="Nome"
                 value={jogador.nome}
@@ -247,7 +263,7 @@ export default function Times() {
                   setJogadores(updated);
                 }}
               />
-              <input
+              <InputField
                 type="number"
                 placeholder="Idade"
                 value={jogador.idade}
@@ -257,7 +273,7 @@ export default function Times() {
                   setJogadores(updated);
                 }}
               />
-              <select
+              <SelectField
                 value={jogador.posicao}
                 onChange={(e) => {
                   const updated = [...jogadores];
@@ -270,10 +286,10 @@ export default function Times() {
                 <option value="SF">Ala</option>
                 <option value="PF">Ala-Pivô</option>
                 <option value="C">Pivô</option>
-              </select>
-              <input
+              </SelectField>
+              <InputField
                 type="text"
-                placeholder="Altura(0.00)"
+                placeholder="Altura (0.00)"
                 value={jogador.altura}
                 onChange={(e) => {
                   const updated = [...jogadores];
@@ -281,7 +297,7 @@ export default function Times() {
                   setJogadores(updated);
                 }}
               />
-              <input
+              <InputField
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
@@ -290,13 +306,13 @@ export default function Times() {
                   setJogadores(updated);
                 }}
               />
-            </div>
+            </PlayerCard>
           ))}
 
-          <button onClick={handleCreateTimeWithPlayers} style={{ padding: "10px 20px", backgroundColor: "#f77", color: "#fff", border: "none", borderRadius: "5px" }}>
+          <SubmitButton onClick={handleCreateTimeWithPlayers}>
             Cadastrar Time e Jogadores
-          </button>
-        </div>
+          </SubmitButton>
+        </FormContainer>
       </div>
     </Layout>
   );
