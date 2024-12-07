@@ -157,7 +157,7 @@ export default function Times() {
         )}
 
         {/* Dropdown de seleção de time */}
-        <Dropdown>
+        {/*<Dropdown>
           <label htmlFor="time-select">Selecione um time:</label>
           <select
             id="time-select"
@@ -174,6 +174,7 @@ export default function Times() {
             ))}
           </select>
         </Dropdown>
+        */}
 
         <JogadorRowContainer>
           {jogadores.map((jogador) => (
@@ -208,7 +209,6 @@ export default function Times() {
         </JogadorRowContainer>
 
 
-        {/* Formulário de cadastro de time */}
         {/* Formulário de cadastro de time */}
         <FormContainer>
           <h2>Cadastrar Novo Time</h2>
