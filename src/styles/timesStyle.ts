@@ -14,51 +14,52 @@ export const JogadorRowContainer = styled.div`
 
 
 export const JogadorRow = styled.div`
-  display: flex; /* Alinha os itens em uma linha */
-  flex-direction: row; /* Define orientação horizontal */
-  align-items: center; /* Centraliza os itens verticalmente */
-  background-color: #1c1c1c; /* Fundo escuro */
-  border-radius: 10px; /* Cantos arredondados */
-  padding: 15px; /* Espaçamento interno */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Sombra mais intensa */
-  transition: transform 0.2s, background 0.3s; /* Animações suaves ao passar o mouse */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, background 0.3s;
 
   &:hover {
-    transform: scale(1.02); /* Aumenta levemente no hover */
-    background: linear-gradient(135deg, #ff6200, #2a2a2a); /* Gradiente ao passar o mouse */
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #ff6200, #2a2a2a);
   }
 
   img {
-    margin-right: 15px; /* Espaço ao lado da imagem */
-    cursor: pointer; /* Cursor de clique */
-    border: 2px solid #ff6200; /* Borda laranja */
-    border-radius: 50%; /* Forma circular */
+    margin-right: 15px;
+    cursor: pointer;
+    border: 2px solid #ff6200;
+    border-radius: 50%;
   }
 
   div {
-    flex: 1; /* Ocupa o espaço restante */
-    display: flex; /* Usa flexbox */
-    flex-direction: column; /* Coluna */
-    gap: 5px; /* Espaçamento entre itens */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
     td {
       margin: 0;
-      font-size: 16px; /* Tamanho da fonte */
-      font-weight: bold; /* Negrito */
-      color: #fff; /* Texto branco */
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
     }
   }
 
   .details {
-    margin-top: 10px; /* Espaço superior */
-    padding: 10px; /* Espaçamento interno */
-    background: #2a2a2a; /* Fundo escuro */
-    border-radius: 8px; /* Cantos arredondados */
-    color: #ff6200; /* Texto laranja para destaque */
-    font-size: 14px; /* Tamanho da fonte */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    margin-top: 10px;
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    color: #ff6200;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 `;
+
 
 
 
@@ -96,9 +97,6 @@ export const Dropdown = styled.div`
     }
   }
 `;
-
-
-
 
 // Estilo para a tabela de jogadores - ver depois!!!!
 type PageProps = {
@@ -559,6 +557,22 @@ export const PlayerCard = styled.div`
 `;
 
 export const SubmitButton = styled.button`
+  padding: 12px 20px;
+  background-color: #ff6200;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #ff8c32;
+  }
+`;
+
+// Exemplo de exportação
+export const StartButton = styled.button`
   padding: 12px 20px;
   background-color: #ff6200;
   color: #fff;
