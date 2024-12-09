@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "../../components/Layout";
 import useAuth from "../../hook/withAuth";
-import { JogadorRowContainer, JogadorRow, HeaderArea, FormContainer, InputField, TextAreaField, SelectField, PlayerCard, SubmitButton, StartButton } from "../../styles/timesStyle";
+import { FormContainer, HeaderArea, InputField, JogadorRow, JogadorRowContainer, PlayerCard, SelectField, StartButton, SubmitButton, TextAreaField } from "../../styles/timesStyle";
 import { JogadorType, TimesType } from "../../types/types";
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -17,9 +17,10 @@ export default function Times() {
   const [selectedTime, setSelectedTime] = useState<TimesType | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
-  const [newTime, setNewTime] = useState<Omit<TimesType, "id" | "numero_jogadores" | "vitorias" | "derrotas" | "campeonatos_vencidos"> & { numero_jogadores?: number }>({
+  const [newTime, setNewTime] = useState<Omit<TimesType, "id" | "numero_jogadores" | "vitorias" | "derrotas"> & { numero_jogadores?: number }>({
     nome: "",
     regiao: "",
+    endereco: "",
     treinador: "",
     descricao: "",
     logo: null,
@@ -52,7 +53,7 @@ export default function Times() {
 
   const togglePlayerDetails = (id: number) => {
     setSelectedPlayer(selectedPlayer === id ? null : id); // Alterna a seleção do jogador
-  };  
+  };
 
   const handleNumeroJogadoresChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const numero = parseInt(e.target.value) || 0;
@@ -60,10 +61,11 @@ export default function Times() {
 
     const newJogadores = Array.from({ length: numero }, (_, index) => ({
       nome: "",
-      idade: 0,
+      //idade: ,
       posicao: "PG",
       status: "Ativo",
       altura: "",
+      peso: "",
       foto: null,
       time: null,
     }));
@@ -72,9 +74,10 @@ export default function Times() {
 
   const handleCreateTimeWithPlayers = async () => {
     try {
-      const formData = new FormData();
+      const formData = new FormData(); 
       formData.append("nome", newTime.nome);
       formData.append("regiao", newTime.regiao);
+      formData.append("endereco", newTime.endereco);
       formData.append("treinador", newTime.treinador);
       formData.append("descricao", newTime.descricao);
       formData.append("numero_jogadores", newTime.numero_jogadores?.toString() || "0");
@@ -82,21 +85,32 @@ export default function Times() {
         formData.append("logo", newTime.logo);
       }
       formData.append("jogadores", JSON.stringify(jogadores));
-
+  
+      console.log("FormData enviado:");
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
+      }
+  
       const response = await axios.post("http://localhost:8000/create_time/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
+  
       alert(response.data.message);
       atualizaTimes();
-      setFormVisible(false); // Esconde o formulário após o cadastro
-      setJogadores([]); // Limpa os jogadores após o envio do formulário
-      setIsPlayersLoaded(false); // Reseta o estado de carregamento de jogadores
+      setFormVisible(false);
+      setJogadores([]);
     } catch (error) {
       console.error("Erro ao criar time e jogadores:", error);
-      alert("Erro desconhecido. Verifique o console para mais detalhes.");
+  
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Erro do servidor:", error.response.data);
+        alert(`Erro: ${error.response.data.error || "Erro desconhecido no servidor"}`);
+      } else {
+        alert("Erro desconhecido. Verifique o console para mais detalhes.");
+      }
     }
   };
+  
 
   useEffect(() => {
     atualizaTimes();
@@ -126,6 +140,7 @@ export default function Times() {
               <div className="team-details">
                 <h1>{selectedTime.nome}</h1>
                 <p><strong>Região:</strong> {selectedTime.regiao}</p>
+                <p><strong>Endereco:</strong> {selectedTime.endereco}</p>
                 <p><strong>Treinador:</strong> {selectedTime.treinador}</p>
                 <p><strong>Jogadores:</strong> {selectedTime.numero_jogadores}</p>
               </div>
@@ -152,11 +167,24 @@ export default function Times() {
               value={newTime.nome}
               onChange={(e) => setNewTime({ ...newTime, nome: e.target.value })}
             />
+
+             <SelectField
+                value={newTime.regiao}
+                onChange={(e) => setNewTime({ ...newTime, regiao: e.target.value })}
+              >
+                <option value="">Selecione uma Região</option>
+                <option value="Norte">Norte</option>
+                <option value="Nordeste">Nordeste</option>
+                <option value="Centro-Oeste">Centro-Oeste</option>
+                <option value="Sudeste">Sudeste</option>
+                <option value="Sul">Sul</option>
+              </SelectField>
+            
             <InputField
               type="text"
-              placeholder="Região"
-              value={newTime.regiao}
-              onChange={(e) => setNewTime({ ...newTime, regiao: e.target.value })}
+              placeholder="Endereco"
+              value={newTime.endereco}
+              onChange={(e) => setNewTime({ ...newTime, endereco: e.target.value })}
             />
             <InputField
               type="text"
