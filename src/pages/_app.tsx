@@ -7,6 +7,8 @@ import { GlobalStyles } from "../styles/globals";
 // Importando o tipo 'AppProps' do pacote 'next/app'. Este tipo é usado para tipar as propriedades do componente App.
 import type { AppProps } from "next/app";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // Importando o tema definido em '../styles/Theme'.
 import Head from "next/head";
 import { theme } from "../styles/theme";

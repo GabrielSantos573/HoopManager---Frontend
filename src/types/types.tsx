@@ -15,11 +15,11 @@ export type TimesType = {
   id: number;
   nome: string;
   regiao: string;
+  endereco: string;
   treinador: string;
   numero_jogadores: number;
   vitorias: number;
   derrotas: number;
-  campeonatos_vencidos: number;
   descricao: string;
   logo?: File | null;
 };
@@ -31,6 +31,7 @@ export type JogadorType = {
   posicao: string;
   status: string;
   altura: string;
+  peso: string;
   pontos: number;
   rebotes: number;
   assistencias: number;

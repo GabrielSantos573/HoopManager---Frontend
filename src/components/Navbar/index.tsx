@@ -18,23 +18,11 @@ type NavLinkType = {
 
 const navlink: NavLinkType = {
   padrao: [
-    { icon: "/nav/time-basquete.png", link: ".", name: "Time", aba: "time" },
-    { icon: "/nav/tabela-basquete.png", link: ".", name: "Partidas", aba: "manutencao" },
+    { icon: "/nav/time-basquete.png", link: "/times", name: "Time", aba: "padrao" },
+    { icon: "/nav/tabela-basquete.png", link: "/partidas", name: "Partidas", aba: "padrao" },
     { icon: "/nav/quadra-basquete.png", link: ".", name: "Treinos", aba: "treinos" },
   ],
-  time: [
-    { icon: "/nav/botao-play.png", link: "/ticket", name: "Criar Time", aba: "padrao" },
-    { icon: "/nav/cesta-de-basquete.png", link: "/ticket", name: "Ver time", aba: "padrao" },
-    { icon: "/nav/botao-editar.png", link: "/desconto", name: "Editar time", aba: "padrao", },
-    { icon: "/nav/jogador-dunk.png", link: "/localidades", name: "Jogadores", aba: "padrao", },
-    { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
-  ],
-  manutencao: [
-    { icon: "/nav/cesta-de-basquete.png", link: "/ticket", name: "Ver partidas", aba: "padrao" },
-    { icon: "/nav/jogador-de-basquete.png", link: "/desconto", name: "Criar Partidas", aba: "padrao", },
-    { icon: "/nav/quadra-de-basquete.png", link: "/localidades", name: "Editar Partidas", aba: "padrao", },
-    { icon: "/nav/voltar.png", link: ".", name: "Voltar", aba: "padrao" },
-  ],
+  
   treinos: [
     { icon: "/nav/calendario.png", link: "/ticket", name: "Dias de treino", aba: "padrao" },
     { icon: "/nav/videos.png", link: "/desconto", name: "Videos e jodadas", aba: "padrao", },

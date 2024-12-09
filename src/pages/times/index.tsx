@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "../../components/Layout";
 import useAuth from "../../hook/withAuth";
-import { Dropdown, HeaderArea, JogadorRow, JogadorRowContainer } from "../../styles/timesStyle";
+import { FormContainer, HeaderArea, InputField, JogadorRow, JogadorRowContainer, PlayerCard, SelectField, StartButton, SubmitButton, TextAreaField } from "../../styles/timesStyle";
 import { JogadorType, TimesType } from "../../types/types";
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -13,18 +13,21 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default function Times() {
   const [times, setTimes] = useState<TimesType[]>([]);
-  const [jogadores, setJogadores] = useState<JogadorType[]>([]); // Já existente
+  const [jogadores, setJogadores] = useState<JogadorType[]>([]);
   const [selectedTime, setSelectedTime] = useState<TimesType | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
-  // Estado para criação de time
-  const [newTime, setNewTime] = useState<Omit<TimesType, "id" | "numero_jogadores" | "vitorias" | "derrotas" | "campeonatos_vencidos"> & { numero_jogadores?: number }>({
+  const [newTime, setNewTime] = useState<Omit<TimesType, "id" | "numero_jogadores" | "vitorias" | "derrotas"> & { numero_jogadores?: number }>({
     nome: "",
     regiao: "",
+    endereco: "",
     treinador: "",
     descricao: "",
     logo: null,
   });
+
+  const [isFormVisible, setFormVisible] = useState(false);
+  const [isPlayersLoaded, setIsPlayersLoaded] = useState(false);
 
   useAuth();
 
@@ -38,41 +41,43 @@ export default function Times() {
     }
   };
 
-  const togglePlayerDetails = (id: number) => {
-    setSelectedPlayer(selectedPlayer === id ? null : id);
-  };
-
   const buscaJogadores = async (timeId: number) => {
     try {
       const response = await axios.get(`http://localhost:8000/get_jogadores/${timeId}/`);
       setJogadores(response.data);
+      setIsPlayersLoaded(true); // Jogadores carregados
     } catch (error) {
       console.error(`Erro ao buscar jogadores: ${error}`);
     }
+  };
+
+  const togglePlayerDetails = (id: number) => {
+    setSelectedPlayer(selectedPlayer === id ? null : id); // Alterna a seleção do jogador
   };
 
   const handleNumeroJogadoresChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const numero = parseInt(e.target.value) || 0;
     setNewTime({ ...newTime, numero_jogadores: numero });
 
-    // Atualiza o estado jogadores com slots para os novos jogadores
     const newJogadores = Array.from({ length: numero }, (_, index) => ({
       nome: "",
-      idade: 0,
+      //idade: ,
       posicao: "PG",
       status: "Ativo",
       altura: "",
+      peso: "",
       foto: null,
-      time: null, // Será associado posteriormente
+      time: null,
     }));
     setJogadores(newJogadores as JogadorType[]);
   };
 
   const handleCreateTimeWithPlayers = async () => {
     try {
-      const formData = new FormData();
+      const formData = new FormData(); 
       formData.append("nome", newTime.nome);
       formData.append("regiao", newTime.regiao);
+      formData.append("endereco", newTime.endereco);
       formData.append("treinador", newTime.treinador);
       formData.append("descricao", newTime.descricao);
       formData.append("numero_jogadores", newTime.numero_jogadores?.toString() || "0");
@@ -81,7 +86,10 @@ export default function Times() {
       }
       formData.append("jogadores", JSON.stringify(jogadores));
   
-      console.log("FormData enviado:", Object.fromEntries(formData.entries()));
+      console.log("FormData enviado:");
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
+      }
   
       const response = await axios.post("http://localhost:8000/create_time/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -89,24 +97,29 @@ export default function Times() {
   
       alert(response.data.message);
       atualizaTimes();
+      setFormVisible(false);
+      setJogadores([]);
     } catch (error) {
       console.error("Erro ao criar time e jogadores:", error);
   
       if (axios.isAxiosError(error) && error.response) {
-        console.error("Detalhes do erro:", error.response.data);
-        alert(`Erro: ${error.response.data.error || "Algo deu errado no servidor"}`);
+        console.error("Erro do servidor:", error.response.data);
+        alert(`Erro: ${error.response.data.error || "Erro desconhecido no servidor"}`);
       } else {
         alert("Erro desconhecido. Verifique o console para mais detalhes.");
       }
     }
   };
+  
 
   useEffect(() => {
     atualizaTimes();
   }, []);
 
   useEffect(() => {
-    if (selectedTime) buscaJogadores(selectedTime.id);
+    if (selectedTime) {
+      buscaJogadores(selectedTime.id); // Quando o time é selecionado, buscar jogadores
+    }
   }, [selectedTime]);
 
   return (
@@ -114,47 +127,166 @@ export default function Times() {
       <div style={{ margin: "auto", width: "100%", padding: "10px", display: "grid", gap: "10px" }}>
         <ToastContainer />
 
-        {/* Detalhes do time selecionado */}
         {selectedTime && (
           <HeaderArea>
-            <div>
+            <div className="header-content">
               <Image
                 src={selectedTime.logo ? `http://127.0.0.1:8000${selectedTime.logo}` : "http://127.0.0.1:8000/media/times/logos/default-logo.png"}
-                width={100}
-                height={100}
+                width={120}
+                height={120}
                 alt={`${selectedTime.nome} logo`}
+                className="team-logo"
               />
-              <h1>{selectedTime.nome}</h1>
-              <p>
-                Região: {selectedTime.regiao} | Treinador: {selectedTime.treinador} | Jogadores: {selectedTime.numero_jogadores}
-              </p>
-              <p>
-                Vitórias: {selectedTime.vitorias} | Derrotas: {selectedTime.derrotas} | Descrição: {selectedTime.descricao}
-              </p>
+              <div className="team-details">
+                <h1>{selectedTime.nome}</h1>
+                <p><strong>Região:</strong> {selectedTime.regiao}</p>
+                <p><strong>Endereco:</strong> {selectedTime.endereco}</p>
+                <p><strong>Treinador:</strong> {selectedTime.treinador}</p>
+                <p><strong>Jogadores:</strong> {selectedTime.numero_jogadores}</p>
+              </div>
+            </div>
+            <div className="team-stats">
+              <p><strong>Vitórias:</strong> {selectedTime.vitorias} | <strong>Derrotas:</strong> {selectedTime.derrotas}</p>
+              <p><strong>Descrição:</strong> {selectedTime.descricao}</p>
             </div>
           </HeaderArea>
         )}
 
-        {/* Dropdown de seleção de time */}
-        <Dropdown>
-          <label htmlFor="time-select">Selecione um time:</label>
-          <select
-            id="time-select"
-            onChange={(e) => {
-              const selected = times.find((time) => time.id === parseInt(e.target.value));
-              setSelectedTime(selected || null);
-            }}
-          >
-            <option value="">Selecione um time</option>
-            {times.map((time) => (
-              <option key={time.id} value={time.id}>
-                {time.nome}
-              </option>
-            ))}
-          </select>
-        </Dropdown>
+        {/* Botão para iniciar time */}
+        {!isFormVisible && !isPlayersLoaded && (
+          <StartButton onClick={() => setFormVisible(true)}>Iniciar Time</StartButton>
+        )}
 
-        <JogadorRowContainer>
+        {/* Formulário de cadastro de time */}
+        {isFormVisible && (
+          <FormContainer>
+            <h2>Cadastrar Novo Time</h2>
+            <InputField
+              type="text"
+              placeholder="Nome"
+              value={newTime.nome}
+              onChange={(e) => setNewTime({ ...newTime, nome: e.target.value })}
+            />
+
+             <SelectField
+                value={newTime.regiao}
+                onChange={(e) => setNewTime({ ...newTime, regiao: e.target.value })}
+              >
+                <option value="">Selecione uma Região</option>
+                <option value="Norte">Norte</option>
+                <option value="Nordeste">Nordeste</option>
+                <option value="Centro-Oeste">Centro-Oeste</option>
+                <option value="Sudeste">Sudeste</option>
+                <option value="Sul">Sul</option>
+              </SelectField>
+            
+            <InputField
+              type="text"
+              placeholder="Endereco"
+              value={newTime.endereco}
+              onChange={(e) => setNewTime({ ...newTime, endereco: e.target.value })}
+            />
+            <InputField
+              type="text"
+              placeholder="Treinador"
+              value={newTime.treinador}
+              onChange={(e) => setNewTime({ ...newTime, treinador: e.target.value })}
+            />
+            <InputField
+              type="number"
+              placeholder="Número de Jogadores"
+              value={newTime.numero_jogadores}
+              onChange={handleNumeroJogadoresChange}
+            />
+            <TextAreaField
+              placeholder="Descrição"
+              value={newTime.descricao}
+              onChange={(e) => setNewTime({ ...newTime, descricao: e.target.value })}
+            />
+            <InputField
+              type="file"
+              accept="image/*"
+              onChange={(e) => setNewTime({ ...newTime, logo: e.target.files ? e.target.files[0] : null })}
+            />
+
+            {jogadores.length > 0 && jogadores.map((jogador, index) => (
+              <PlayerCard key={index}>
+                <h4>Jogador {index + 1}</h4>
+                <InputField
+                  type="text"
+                  placeholder="Nome"
+                  value={jogador.nome}
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].nome = e.target.value;
+                    setJogadores(updated);
+                  }}
+                />
+                <InputField
+                  type="number"
+                  placeholder="Idade"
+                  value={jogador.idade}
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].idade = parseInt(e.target.value);
+                    setJogadores(updated);
+                  }}
+                />
+                <SelectField
+                  value={jogador.posicao}
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].posicao = e.target.value;
+                    setJogadores(updated);
+                  }}
+                >
+                  <option value="PG">Armador</option>
+                  <option value="SG">Ala-Armador</option>
+                  <option value="SF">Ala</option>
+                  <option value="PF">Ala-Pivô</option>
+                  <option value="C">Pivô</option>
+                </SelectField>
+                <InputField
+                  type="text"
+                  placeholder="Altura (0.00)"
+                  value={jogador.altura}
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].altura = e.target.value;
+                    setJogadores(updated);
+                  }}
+                />
+                <InputField
+                  type="text"
+                  placeholder="Peso (kg)"
+                  value={jogador.peso}
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].peso = e.target.value;
+                    setJogadores(updated);
+                  }}
+                />
+                <InputField
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].foto = e.target.files ? e.target.files[0] : null;
+                    setJogadores(updated);
+                  }}
+                />
+              </PlayerCard>
+            ))}
+
+            <SubmitButton onClick={handleCreateTimeWithPlayers}>
+              Cadastrar Time e Jogadores
+            </SubmitButton>
+          </FormContainer>
+        )}
+
+        {/* Exibição dos jogadores após cadastro */}
+        {isPlayersLoaded && (
+          <JogadorRowContainer>
           {jogadores.map((jogador) => (
             <JogadorRow key={jogador.id}>
               <Image
@@ -162,18 +294,17 @@ export default function Times() {
                 width={50}
                 height={50}
                 alt={`${jogador.nome} foto`}
-                style={{ borderRadius: "50%", cursor: "pointer" }}
-                onClick={() => togglePlayerDetails(jogador.id)}
+                style={{ borderRadius: "50%" }}
+                onClick={() => togglePlayerDetails(jogador.id)} // Função para mostrar/ocultar detalhes
               />
-              <div style={{ flex: 1 }}>
-                <td><strong>{jogador.nome}</strong></td>
-                <td>| Posição: {jogador.posicao}</td>
-                <td>| Idade: {jogador.idade}</td>
+              <div>
+                <strong>{jogador.nome}</strong> | Posição: {jogador.posicao} | Idade: {jogador.idade}
               </div>
               {selectedPlayer === jogador.id && (
                 <div className="details">
                   <p>Status: {jogador.status}</p>
                   <p>Altura: {jogador.altura}</p>
+                  <p>Peso: {jogador.peso}</p>
                   <p>Pontos: {jogador.pontos}</p>
                   <p>Rebotes: {jogador.rebotes}</p>
                   <p>Assistências: {jogador.assistencias}</p>
@@ -185,118 +316,8 @@ export default function Times() {
             </JogadorRow>
           ))}
         </JogadorRowContainer>
-
-
-        {/* Formulário de cadastro de time */}
-        <div style={{ border: "1px solid #ccc", padding: "15px", borderRadius: "5px", backgroundColor: "#fff" }}>
-          <h2>Cadastrar Novo Time</h2>
-          <input
-            type="text"
-            placeholder="Nome"
-            value={newTime.nome}
-            onChange={(e) => setNewTime({ ...newTime, nome: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
-          />
-          <input
-            type="text"
-            placeholder="Região"
-            value={newTime.regiao}
-            onChange={(e) => setNewTime({ ...newTime, regiao: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
-          />
-          <input
-            type="text"
-            placeholder="Treinador"
-            value={newTime.treinador}
-            onChange={(e) => setNewTime({ ...newTime, treinador: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
-          />
-          <input
-            type="number"
-            placeholder="Número de Jogadores"
-            value={newTime.numero_jogadores}
-            onChange={handleNumeroJogadoresChange}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
-          />
-          <textarea
-            placeholder="Descrição"
-            value={newTime.descricao}
-            onChange={(e) => setNewTime({ ...newTime, descricao: e.target.value })}
-            style={{ display: "block", marginBottom: "10px", padding: "5px", width: "100%" }}
-          ></textarea>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files ? e.target.files[0] : null;
-              setNewTime({ ...newTime, logo: file });
-            }}
-            style={{ display: "block", marginBottom: "10px" }}
-          />
-
-          {jogadores.map((jogador, index) => (
-            <div key={index} style={{ border: "1px solid #ddd", marginBottom: "10px", padding: "10px" }}>
-              <h4>Jogador {index + 1}</h4>
-              <input
-                type="text"
-                placeholder="Nome"
-                value={jogador.nome}
-                onChange={(e) => {
-                  const updated = [...jogadores];
-                  updated[index].nome = e.target.value;
-                  setJogadores(updated);
-                }}
-              />
-              <input
-                type="number"
-                placeholder="Idade"
-                value={jogador.idade}
-                onChange={(e) => {
-                  const updated = [...jogadores];
-                  updated[index].idade = parseInt(e.target.value);
-                  setJogadores(updated);
-                }}
-              />
-              <select
-                value={jogador.posicao}
-                onChange={(e) => {
-                  const updated = [...jogadores];
-                  updated[index].posicao = e.target.value;
-                  setJogadores(updated);
-                }}
-              >
-                <option value="PG">Armador</option>
-                <option value="SG">Ala-Armador</option>
-                <option value="SF">Ala</option>
-                <option value="PF">Ala-Pivô</option>
-                <option value="C">Pivô</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Altura(0.00)"
-                value={jogador.altura}
-                onChange={(e) => {
-                  const updated = [...jogadores];
-                  updated[index].altura = e.target.value;
-                  setJogadores(updated);
-                }}
-              />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const updated = [...jogadores];
-                  updated[index].foto = e.target.files ? e.target.files[0] : null;
-                  setJogadores(updated);
-                }}
-              />
-            </div>
-          ))}
-
-          <button onClick={handleCreateTimeWithPlayers} style={{ padding: "10px 20px", backgroundColor: "#f77", color: "#fff", border: "none", borderRadius: "5px" }}>
-            Cadastrar Time e Jogadores
-          </button>
-        </div>
+        
+        )}
       </div>
     </Layout>
   );
