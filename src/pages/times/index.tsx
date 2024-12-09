@@ -229,6 +229,16 @@ export default function Times() {
                   }}
                 />
                 <InputField
+                  type="text"
+                  placeholder="Peso (kg)"
+                  value={jogador.peso}
+                  onChange={(e) => {
+                    const updated = [...jogadores];
+                    updated[index].peso = e.target.value;
+                    setJogadores(updated);
+                  }}
+                />
+                <InputField
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
@@ -266,6 +276,7 @@ export default function Times() {
                 <div className="details">
                   <p>Status: {jogador.status}</p>
                   <p>Altura: {jogador.altura}</p>
+                  <p>Peso: {jogador.peso}</p>
                   <p>Pontos: {jogador.pontos}</p>
                   <p>Rebotes: {jogador.rebotes}</p>
                   <p>Assistências: {jogador.assistencias}</p>

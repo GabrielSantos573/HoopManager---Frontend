@@ -60,9 +60,6 @@ export const JogadorRow = styled.div`
   }
 `;
 
-
-
-
 // Dropdown para seleção de times
 export const Dropdown = styled.div`
   display: flex;
@@ -168,7 +165,8 @@ export const HeaderArea = styled.div`
   flex-direction: column;
   gap: 15px;
   padding: 20px;
-  background: linear-gradient(135deg, #1e1e1e, #121212); /* Fundo escuro com gradiente */
+  background: linear-gradient(45deg, #444444, #000000);
+//background: linear-gradient(135deg, #1e1e1e, #121212); /* Fundo escuro com gradiente */
   border-radius: 12px; /* Cantos arredondados */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar o container */
 
