@@ -28,6 +28,11 @@ export default function Times() {
 
   const [isFormVisible, setFormVisible] = useState(false);
   const [isPlayersLoaded, setIsPlayersLoaded] = useState(false);
+  const [newArena, setNewArena] = useState({
+    nome: "",
+    local: "",
+    capacidade: "",
+  });
 
   useAuth();
 
@@ -74,7 +79,7 @@ export default function Times() {
 
   const handleCreateTimeWithPlayers = async () => {
     try {
-      const formData = new FormData(); 
+      const formData = new FormData();
       formData.append("nome", newTime.nome);
       formData.append("regiao", newTime.regiao);
       formData.append("endereco", newTime.endereco);
@@ -85,25 +90,24 @@ export default function Times() {
         formData.append("logo", newTime.logo);
       }
       formData.append("jogadores", JSON.stringify(jogadores));
-  
-      console.log("FormData enviado:");
-      for (const pair of formData.entries()) {
-        console.log(`${pair[0]}:`, pair[1]);
-      }
-  
+
+      // Dados da Arena
+      formData.append("arena_nome", newArena.nome);
+      formData.append("arena_local", newArena.local);
+      formData.append("arena_capacidade", newArena.capacidade);
+
       const response = await axios.post("http://localhost:8000/create_time/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-  
+
       alert(response.data.message);
       atualizaTimes();
       setFormVisible(false);
       setJogadores([]);
+      setNewArena({ nome: "", local: "", capacidade: "" });
     } catch (error) {
-      console.error("Erro ao criar time e jogadores:", error);
-  
+      console.error("Erro ao criar time e arena:", error);
       if (axios.isAxiosError(error) && error.response) {
-        console.error("Erro do servidor:", error.response.data);
         alert(`Erro: ${error.response.data.error || "Erro desconhecido no servidor"}`);
       } else {
         alert("Erro desconhecido. Verifique o console para mais detalhes.");
@@ -115,6 +119,12 @@ export default function Times() {
   useEffect(() => {
     atualizaTimes();
   }, []);
+
+  useEffect(() => {
+    if (selectedTime) {
+      buscaJogadores(selectedTime.id); // Quando o time é selecionado, buscar jogadores
+    }
+  }, [selectedTime]);
 
   useEffect(() => {
     if (selectedTime) {
@@ -143,6 +153,7 @@ export default function Times() {
                 <p><strong>Endereco:</strong> {selectedTime.endereco}</p>
                 <p><strong>Treinador:</strong> {selectedTime.treinador}</p>
                 <p><strong>Jogadores:</strong> {selectedTime.numero_jogadores}</p>
+                <p><strong>Arena:</strong> {selectedTime.arena?.nome}</p>
               </div>
             </div>
             <div className="team-stats">
@@ -207,6 +218,26 @@ export default function Times() {
               type="file"
               accept="image/*"
               onChange={(e) => setNewTime({ ...newTime, logo: e.target.files ? e.target.files[0] : null })}
+            />
+
+            <h2>Cadastrar Arena</h2>
+            <InputField
+              type="text"
+              placeholder="Nome da Arena"
+              value={newArena.nome}
+              onChange={(e) => setNewArena({ ...newArena, nome: e.target.value })}
+            />
+            <InputField
+              type="text"
+              placeholder="Local da Arena"
+              value={newArena.local}
+              onChange={(e) => setNewArena({ ...newArena, local: e.target.value })}
+            />
+            <InputField
+              type="number"
+              placeholder="Capacidade da Arena"
+              value={newArena.capacidade}
+              onChange={(e) => setNewArena({ ...newArena, capacidade: e.target.value })}
             />
 
             {jogadores.length > 0 && jogadores.map((jogador, index) => (
