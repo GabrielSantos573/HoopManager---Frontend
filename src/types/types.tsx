@@ -21,6 +21,7 @@ export type TimesType = {
   vitorias: number;
   derrotas: number;
   descricao: string;
+  arena?: ArenaType | null;
   logo?: File | null;
 };
 
@@ -43,18 +44,23 @@ export type JogadorType = {
 };
 
 export type ArenaType = {
+  id: number;
   nome: string;
   local: string;
   capacidade: number;
-  time_casa?: TimesType | null;
+  time?: { id: number; nome: string } | null;
 };
 
 export type PartidaType = {
+  id: number;
   data: string;
   arena: ArenaType;
-  time_visitante: TimesType;
-  placar_time_casa: number;
-  placar_time_visitante: number;
+  time?: TimesType| null;
+  time_adversario: string;
+  placar_time: number;
+  placar_time_adversario: number;
+  status: string;
+  status_local: string;
 };
 
 export type EstatisticaPartidaType = {

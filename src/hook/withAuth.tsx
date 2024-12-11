@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const useAuth = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const useAuth = () => {
         router.push("/login");
       } else {
         try {
-          const { data } = await axios.get("http://localhost:8000/home/", {
+          const { data } = await axios.get("http://localhost:8000/auth/home/", {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
