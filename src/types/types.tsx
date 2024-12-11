@@ -48,18 +48,19 @@ export type ArenaType = {
   nome: string;
   local: string;
   capacidade: number;
-  time_casa?: TimesType | null;
+  time?: { id: number; nome: string } | null;
 };
 
 export type PartidaType = {
   id: number;
   data: string;
   arena: ArenaType;
-  time: TimesType| null;
+  time?: TimesType| null;
   time_adversario: string;
   placar_time: number;
   placar_time_adversario: number;
   status: string;
+  status_local: string;
 };
 
 export type EstatisticaPartidaType = {

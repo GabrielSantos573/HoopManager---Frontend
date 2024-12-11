@@ -38,7 +38,7 @@ export default function Times() {
 
   const atualizaTimes = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/get_times/");
+      const response = await axios.get("http://localhost:8000/times/get_times/");
       setTimes(response.data);
       if (response.data.length > 0) setSelectedTime(response.data[0]);
     } catch (error) {
@@ -48,7 +48,7 @@ export default function Times() {
 
   const buscaJogadores = async (timeId: number) => {
     try {
-      const response = await axios.get(`http://localhost:8000/get_jogadores/${timeId}/`);
+      const response = await axios.get(`http://localhost:8000/times/get_jogadores/${timeId}/`);
       setJogadores(response.data);
       setIsPlayersLoaded(true); // Jogadores carregados
     } catch (error) {
@@ -96,7 +96,7 @@ export default function Times() {
       formData.append("arena_local", newArena.local);
       formData.append("arena_capacidade", newArena.capacidade);
 
-      const response = await axios.post("http://localhost:8000/create_time/", formData, {
+      const response = await axios.post("http://localhost:8000/times/create_time/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

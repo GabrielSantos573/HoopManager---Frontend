@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const CustomButton = styled.button`
   border-radius: 5px;
-  background: #fff;
+  background: #333;
   padding: 10px 14px;
   border: none;
   cursor: pointer;
   height: 40px;
 
-  color: #28478e;
+  color: #fff;
   text-align: center;
   font-family: Arial;
   font-size: 14px;

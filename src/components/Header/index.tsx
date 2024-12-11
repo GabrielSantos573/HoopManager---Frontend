@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from "axios";
-import { LogoutButton } from "../logout";
-import { Container, TextContainer, HeaderWrapper, LogoContainer, LogoutContainer } from "./style";
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { LogoutButton } from "../logout";
+import { Container, HeaderWrapper, LogoContainer, LogoutContainer, TextContainer } from "./style";
 
 interface HeaderProps {
   pag: string;
@@ -16,7 +16,7 @@ export const Header: React.FC<HeaderProps> = ({ pag }) => {
         
           (async () => {
             try {
-              const { data } = await axios.get("http://localhost:8000/home/", {
+              const { data } = await axios.get("http://localhost:8000/auth/home/", {
                 headers: {
                   "Content-Type": "application/json",
                   // Incluindo o token de acesso no cabeçalho da solicitação.
